@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/meetingRooms")
+@RequestMapping("/meetingrooms")
 @RequiredArgsConstructor
 public class MeetingRoomController {
     private final IMeetingRoomMapper meetingRoomMapper;
