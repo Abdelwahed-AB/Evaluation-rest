@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -83,7 +83,7 @@ public class ReservationService implements IReservationService {
     private boolean isRoomAvailableAndIgnoreReservation(Reservation reservation, Long roomId, LocalDateTime startDate, LocalDateTime endDate){
         List<Reservation> roomReservationsByInterval = reservationRepository.getRoomReservationsByInterval(roomId, startDate, endDate)
                 .stream()
-                .filter(reserv -> reserv.getId() != reservation.getId())
+                .filter(reserv -> !Objects.equals(reserv.getId(), reservation.getId()))
                 .toList();
 
         return roomReservationsByInterval.isEmpty();

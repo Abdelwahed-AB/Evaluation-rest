@@ -8,7 +8,6 @@ import com.evaluationrest.evaluationrest.mappers.IMeetingRoomMapper;
 import com.evaluationrest.evaluationrest.services.IMeetingRoomService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
