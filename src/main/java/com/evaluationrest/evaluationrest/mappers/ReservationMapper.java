@@ -1,20 +1,20 @@
 package com.evaluationrest.evaluationrest.mappers;
 
-import com.evaluationrest.evaluationrest.dto.request.MeetingRoomReservationRequest;
-import com.evaluationrest.evaluationrest.dto.response.MeetingRoomReservationResponse;
+import com.evaluationrest.evaluationrest.dto.request.ReservationRequest;
+import com.evaluationrest.evaluationrest.dto.response.ReservationResponse;
 import com.evaluationrest.evaluationrest.entities.MeetingRoom;
-import com.evaluationrest.evaluationrest.entities.MeetingRoomReservation;
+import com.evaluationrest.evaluationrest.entities.Reservation;
 import com.evaluationrest.evaluationrest.entities.User;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MeetingRoomReservationMapper implements IMeetingRoomReservationMapper{
+public class ReservationMapper implements IReservationMapper {
     @Override
-    public MeetingRoomReservation meetingRoomReservationRequestToMeetingRoomReservation(MeetingRoomReservationRequest req) {
+    public Reservation reservationRequestToReservation(ReservationRequest req) {
         MeetingRoom meetingRoom = MeetingRoom.builder().id(req.meetingRoomId()).build();
         User user = User.builder().id(req.userId()).build();
 
-        MeetingRoomReservation reservation = MeetingRoomReservation.builder()
+        Reservation reservation = Reservation.builder()
                 .user(user)
                 .room(meetingRoom)
                 .startTime(req.startTime())
@@ -25,8 +25,8 @@ public class MeetingRoomReservationMapper implements IMeetingRoomReservationMapp
     }
 
     @Override
-    public MeetingRoomReservationResponse meetingRoomReservationToMeetingRoomReservationResponse(MeetingRoomReservation reservation) {
-        MeetingRoomReservationResponse response = new MeetingRoomReservationResponse(
+    public ReservationResponse reservationToReservationResponse(Reservation reservation) {
+        ReservationResponse response = new ReservationResponse(
                 reservation.getId(),
                 reservation.getRoom().getId(),
                 reservation.getUser().getId(),
