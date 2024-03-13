@@ -5,6 +5,7 @@ import com.evaluationrest.evaluationrest.dto.response.ReservationResponse;
 import com.evaluationrest.evaluationrest.entities.Reservation;
 import com.evaluationrest.evaluationrest.mappers.IReservationMapper;
 import com.evaluationrest.evaluationrest.services.IReservationService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +31,7 @@ public class ReservationController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createMeetingRoomReservation(@RequestBody ReservationRequest reservationRequest){
+    public ResponseEntity<String> createMeetingRoomReservation(@RequestBody @Valid ReservationRequest reservationRequest){
         Reservation reservation = mapper.reservationRequestToReservation(reservationRequest);
         meetingRoomReservationService.createReservation(reservation);
 
@@ -38,7 +39,7 @@ public class ReservationController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateMeetingRoomReservation(@PathVariable("id") Long id, @RequestBody ReservationRequest reservationRequest){
+    public ResponseEntity<String> updateMeetingRoomReservation(@PathVariable("id") Long id, @RequestBody @Valid ReservationRequest reservationRequest){
         Reservation reservation = mapper.reservationRequestToReservation(reservationRequest);
         meetingRoomReservationService.updateReservation(id, reservation);
 

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -50,6 +51,20 @@ public class ReservationService implements IReservationService {
     @Override
     public void updateReservation(Long id, Reservation reservation) {
         reservation.setId(id);
+        //check if room & user & reservation exist
+        findById(id);
+        userService.findById(reservation.getUser().getId());
+        meetingRoomService.findById(reservation.getRoom().getId());
+
+        LocalDateTime start = reservation.getStartTime();
+        LocalDateTime end = reservation.getEndTime();
+        if(start.isAfter(end)){
+            throw new InvalidDateIntervalException(start, end);
+        }
+
+        if(!isRoomAvailableAndIgnoreReservation(reservation, reservation.getRoom().getId(), start, end)) {
+            throw new MeetingRoomUnavailableException(reservation.getRoom().getId(), start, end);
+        }
         reservationRepository.save(reservation);
     }
 
@@ -62,6 +77,15 @@ public class ReservationService implements IReservationService {
     @Override
     public boolean isRoomAvailable(Long roomId, LocalDateTime startDate, LocalDateTime endDate) {
         List<Reservation> roomReservationsByInterval = reservationRepository.getRoomReservationsByInterval(roomId, startDate, endDate);
+        return roomReservationsByInterval.isEmpty();
+    }
+
+    private boolean isRoomAvailableAndIgnoreReservation(Reservation reservation, Long roomId, LocalDateTime startDate, LocalDateTime endDate){
+        List<Reservation> roomReservationsByInterval = reservationRepository.getRoomReservationsByInterval(roomId, startDate, endDate)
+                .stream()
+                .filter(reserv -> reserv.getId() != reservation.getId())
+                .toList();
+
         return roomReservationsByInterval.isEmpty();
     }
 }

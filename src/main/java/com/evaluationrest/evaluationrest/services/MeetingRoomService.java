@@ -6,38 +6,44 @@ import com.evaluationrest.evaluationrest.repositories.MeetingRoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class MeetingRoomService implements IMeetingRoomService{
-    private final MeetingRoomRepository MeetingRoomRepository;
+    private final MeetingRoomRepository meetingRoomRepository;
 
     @Override
     public List<MeetingRoom> findAll() {
-        return MeetingRoomRepository.findAll();
+        return meetingRoomRepository.findAll();
+    }
+
+    @Override
+    public List<MeetingRoom> getAvailableRooms(LocalDateTime start, LocalDateTime end) {
+        return meetingRoomRepository.getAvailableRooms(start, end);
     }
 
     @Override
     public MeetingRoom findById(Long id) {
-        return MeetingRoomRepository.findById(id).orElseThrow(()->new MeetingRoomNotFoundException(id));
+        return meetingRoomRepository.findById(id).orElseThrow(()->new MeetingRoomNotFoundException(id));
     }
 
     @Override
-    public void createMeetingRoom(MeetingRoom MeetingRoom) {
-        MeetingRoom.setId(0L);
-        MeetingRoomRepository.save(MeetingRoom);
+    public void createMeetingRoom(MeetingRoom meetingRoom) {
+        meetingRoom.setId(0L);
+        meetingRoomRepository.save(meetingRoom);
     }
 
     @Override
-    public void updateMeetingRoom(Long id, MeetingRoom MeetingRoom) {
-        MeetingRoom.setId(id);
-        MeetingRoomRepository.save(MeetingRoom);
+    public void updateMeetingRoom(Long id, MeetingRoom meetingRoom) {
+        meetingRoom.setId(id);
+        meetingRoomRepository.save(meetingRoom);
     }
 
     @Override
     public void deleteMeetingRoomById(Long id) {
-        MeetingRoom MeetingRoom = findById(id);
-        MeetingRoomRepository.delete(MeetingRoom);
+        MeetingRoom meetingRoom = findById(id);
+        meetingRoomRepository.delete(meetingRoom);
     }
 }

@@ -10,7 +10,6 @@ import java.util.List;
 
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
-
     @Query("from Reservation r where r.room.id = :roomId and (r.startTime <= :endDate and :startDate <= r.endTime)")
     List<Reservation> getRoomReservationsByInterval(Long roomId, LocalDateTime startDate, LocalDateTime endDate);
 }

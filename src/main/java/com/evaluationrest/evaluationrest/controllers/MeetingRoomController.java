@@ -1,11 +1,14 @@
 package com.evaluationrest.evaluationrest.controllers;
 
+import com.evaluationrest.evaluationrest.dto.request.AvailableMeetingRoomsRequest;
 import com.evaluationrest.evaluationrest.dto.request.MeetingRoomRequest;
 import com.evaluationrest.evaluationrest.dto.response.MeetingRoomResponse;
 import com.evaluationrest.evaluationrest.entities.MeetingRoom;
 import com.evaluationrest.evaluationrest.mappers.IMeetingRoomMapper;
 import com.evaluationrest.evaluationrest.services.IMeetingRoomService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,8 +32,16 @@ public class MeetingRoomController {
         return meetingRoomMapper.meetingRoomToMeetingRoomResponse(meetingRoomService.findById(id));
     }
 
+    @GetMapping("/available")
+    public List<MeetingRoomResponse> getAvailableMeetingRooms(@RequestBody @Valid AvailableMeetingRoomsRequest req){
+        return meetingRoomService.getAvailableRooms(req.start(), req.end())
+                .stream()
+                .map(meetingRoomMapper::meetingRoomToMeetingRoomResponse)
+                .collect(Collectors.toList());
+    }
+
     @PostMapping
-    public ResponseEntity<String> createMeetingRoom(@RequestBody MeetingRoomRequest MeetingRoomRequest){
+    public ResponseEntity<String> createMeetingRoom(@RequestBody @Valid MeetingRoomRequest MeetingRoomRequest){
         MeetingRoom MeetingRoom = meetingRoomMapper.meetingRoomRequestToMeetingRoom(MeetingRoomRequest);
         meetingRoomService.createMeetingRoom(MeetingRoom);
 
@@ -38,7 +49,7 @@ public class MeetingRoomController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateMeetingRoom(@PathVariable("id") Long id, @RequestBody MeetingRoomRequest MeetingRoomRequest){
+    public ResponseEntity<String> updateMeetingRoom(@PathVariable("id") Long id, @RequestBody @Valid MeetingRoomRequest MeetingRoomRequest){
         MeetingRoom MeetingRoom = meetingRoomMapper.meetingRoomRequestToMeetingRoom(MeetingRoomRequest);
         meetingRoomService.updateMeetingRoom(id, MeetingRoom);
 
