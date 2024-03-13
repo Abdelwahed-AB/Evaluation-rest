@@ -3,7 +3,9 @@ package com.evaluationrest.evaluationrest.mappers;
 import com.evaluationrest.evaluationrest.dto.request.UserRequest;
 import com.evaluationrest.evaluationrest.dto.response.UserResponse;
 import com.evaluationrest.evaluationrest.entities.User;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UserMapper implements IUserMapper{
     @Override
     public User userRequestToUser(UserRequest userRequest) {

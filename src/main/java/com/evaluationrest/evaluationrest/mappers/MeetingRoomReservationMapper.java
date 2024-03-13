@@ -5,7 +5,9 @@ import com.evaluationrest.evaluationrest.dto.response.MeetingRoomReservationResp
 import com.evaluationrest.evaluationrest.entities.MeetingRoom;
 import com.evaluationrest.evaluationrest.entities.MeetingRoomReservation;
 import com.evaluationrest.evaluationrest.entities.User;
+import org.springframework.stereotype.Component;
 
+@Component
 public class MeetingRoomReservationMapper implements IMeetingRoomReservationMapper{
     @Override
     public MeetingRoomReservation meetingRoomReservationRequestToMeetingRoomReservation(MeetingRoomReservationRequest req) {
