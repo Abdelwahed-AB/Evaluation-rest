@@ -2,6 +2,7 @@ package com.evaluationrest.evaluationrest.services;
 
 import com.evaluationrest.evaluationrest.entities.Reservation;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface IReservationService {
@@ -11,4 +12,5 @@ public interface IReservationService {
     void updateReservation(Long id, Reservation Reservation);
     void deleteReservationById(Long id);
 
+    boolean isRoomAvailable(Long roomId, LocalDateTime startDate, LocalDateTime endDate);
 }

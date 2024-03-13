@@ -34,7 +34,7 @@ public class ReservationController {
         Reservation reservation = mapper.reservationRequestToReservation(reservationRequest);
         meetingRoomReservationService.createReservation(reservation);
 
-        return ResponseEntity.ok("MeetingRoomReservation created.");
+        return ResponseEntity.ok("Reservation created.");
     }
 
     @PutMapping("/{id}")
@@ -42,12 +42,12 @@ public class ReservationController {
         Reservation reservation = mapper.reservationRequestToReservation(reservationRequest);
         meetingRoomReservationService.updateReservation(id, reservation);
 
-        return ResponseEntity.ok("MeetingRoomReservation updated.");
+        return ResponseEntity.ok("Reservation updated.");
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteMeetingRoomReservation(@PathVariable("id") Long id){
         meetingRoomReservationService.deleteReservationById(id);
-        return ResponseEntity.ok("MeetingRoomReservation deleted.");
+        return ResponseEntity.ok("Reservation deleted.");
     }
 }

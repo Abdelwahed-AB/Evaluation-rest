@@ -3,6 +3,7 @@ package com.evaluationrest.evaluationrest.dto.request;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
+import org.aspectj.lang.annotation.After;
 
 import java.time.LocalDateTime;
 
@@ -12,10 +13,10 @@ public record ReservationRequest(
         @NotNull(message = "Meeting room id is required")
         Long meetingRoomId,
         @NotNull(message = "Reservation start time is required")
-        @FutureOrPresent(message = "Reservation start time must be now or in the future")
+//        @FutureOrPresent(message = "Reservation start time must be now or in the future")
         LocalDateTime startTime,
         @NotNull(message = "Reservation end time is required")
-        @Future(message = "Reservation end time must be in the future")
+//        @Future(message = "Reservation end time must be in the future")
         LocalDateTime endTime
 ) {
 }
