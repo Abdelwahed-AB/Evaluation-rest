@@ -9,6 +9,7 @@ import com.evaluationrest.evaluationrest.services.IMeetingRoomService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,7 +46,7 @@ public class MeetingRoomController {
         MeetingRoom MeetingRoom = meetingRoomMapper.meetingRoomRequestToMeetingRoom(MeetingRoomRequest);
         meetingRoomService.createMeetingRoom(MeetingRoom);
 
-        return ResponseEntity.ok("MeetingRoom created.");
+        return ResponseEntity.status(HttpStatus.CREATED).body("MeetingRoom created.");
     }
 
     @PutMapping("/{id}")

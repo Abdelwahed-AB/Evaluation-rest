@@ -7,6 +7,7 @@ import com.evaluationrest.evaluationrest.mappers.IUserMapper;
 import com.evaluationrest.evaluationrest.services.IUserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,7 +36,7 @@ public class UserController {
         User user = userMapper.userRequestToUser(userRequest);
         userService.createUser(user);
 
-        return ResponseEntity.ok("User created.");
+        return ResponseEntity.status(HttpStatus.CREATED).body("User created.");
     }
 
     @PutMapping("/{id}")
